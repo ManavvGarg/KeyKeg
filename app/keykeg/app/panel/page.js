@@ -1,12 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { signOut, useSession } from "next-auth/react";
+import NavBar from "@/components/NavBar";
+import HomePage from "../page";
 
 const PanelPage = () => {
+  const { data, status } = useSession();
+
+  //Save Password
   const [newUserSavePass, setNewUserSavePass] = useState("");
-  const [newUserPredPass, setNewUserPredPass] = useState("");
-  const [newUserGenPass, setNewUserGenPass] = useState("");
   const [newUserPassTag, setNewUserPassTag] = useState("");
+
+  //Prediction Pass
+  const [newUserPredPass, setNewUserPredPass] = useState("");
+
+  //Generate Password
+  const [newUserGenPass, setNewUserGenPass] = useState("");
+  const [isSavingDisabled, setIsSavingDisabled] = useState(true);
 
   const handlePredPass = () => {
     // Clear the input field
@@ -27,16 +38,30 @@ const PanelPage = () => {
       .catch((error) => {
         console.error("There was a problem with the request:", error);
       });
+    setIsSavingDisabled(false);
   };
 
   const handleSavePass = () => {
     // Clear the input field
-    setNewUserSavePass(" ");
+    setIsSavingDisabled(true);
+    setNewUserGenPass("");
   };
+
+  if (status === "loading") {
+    return (
+      <div className="flex text-5xl min-h-screen flex-col items-center justify-between p-24">
+        Loading ho rhi bhai
+      </div>
+    );
+  } else if (status == "unauthenticated") {
+    return <HomePage />;
+  }
+
   return (
-    <main className="min-h-screen flex items-center justify-center bg-white">
-      <div className="flex h-screen w-full">
-        {/* Left Section - Add User Form and Users Table */}
+    <main className="items-center justify-center bg-white overflow-hidden">
+      <NavBar navType={2} signOut={signOut} />
+      <div className="flex min-h-[100%] h-[100vh] overflow-hidden w-full">
+        {/* Left Section - Predict, Generate, Save */}
         <div className="flex-1 p-8 border-r border-gray-300">
           {/* Password Strength Predictor */}
           {/* <div>
@@ -73,31 +98,42 @@ const PanelPage = () => {
             >
               Generate
             </button>
-            <div className="mb-4">
-              <label className="block font-medium text-gray-700 text-2xl py-5">
-                Your new generated password:
-              </label>
-              <input
-                type="text"
-                value={newUserGenPass}
-                readOnly
-                className="mt-1 mb-5 p-2 border border-gray-300 rounded-md w-full text-black font-bold"
-              />
-              <button
-                onClick={handleSavePass}
-                className={`bg-blue-500 text-white py-2 px-4 rounded-md ${
-                  newUserGenPass ? "hover:bg-blue-600" : ""
-                } ${newUserGenPass ? "" : "cursor-not-allowed opacity-50"}`}
-                disabled={!newUserGenPass}
-              >
-                Save Password
-              </button>
-            </div>
+            {newUserGenPass ? (
+              <div className="mb-4">
+                <label className="block font-medium text-gray-700 text-2xl py-5">
+                  Your new generated password:
+                </label>
+                <input
+                  type="text"
+                  value={newUserGenPass}
+                  readOnly
+                  className="mt-1 mb-5 p-2 border border-gray-300 rounded-md w-full text-black font-bold"
+                />
+                <button
+                  onClick={handleSavePass}
+                  className={`bg-blue-500 text-white py-2 px-4 rounded-md ${
+                    newUserGenPass ? "hover:bg-blue-600" : ""
+                  } ${newUserGenPass ? "" : "cursor-not-allowed opacity-50"}`}
+                  disabled={isSavingDisabled}
+                >
+                  Save Password
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
-
+          <hr
+            className="my-16"
+            style={{
+              borderTop: "1px solid gray",
+            }}
+          />
           {/* Save Password */}
-          {/* <div>
-            <h2 className="text-2xl font-bold mb-4">Save Password</h2>
+          <div>
+            <h2 className="text-2xl font-bold mb-4 text-black">
+              Save Password
+            </h2>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
                 Enter Password KeyTag (A name which you can remember easily for
@@ -107,7 +143,7 @@ const PanelPage = () => {
                 type="text"
                 value={newUserPassTag}
                 onChange={(e) => setNewUserPassTag(e.target.value)}
-                className={`mt-1 p-2 border rounded-md w-full`}
+                className={`mt-1 p-2 border rounded-md w-full text-black`}
               />
               <label className="block text-sm font-medium text-gray-700">
                 Enter Password:
@@ -116,16 +152,23 @@ const PanelPage = () => {
                 type="password"
                 value={newUserSavePass}
                 onChange={(e) => setNewUserSavePass(e.target.value)}
-                className={`mt-1 p-2 border rounded-md w-full`}
+                className={`mt-1 p-2 border rounded-md w-full text-black`}
               />
             </div>
             <button
               onClick={handleSavePass}
-              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+              className={`bg-blue-500 text-white py-2 px-4 rounded-md ${
+                newUserSavePass && newUserPassTag ? "hover:bg-blue-600" : ""
+              } ${
+                newUserSavePass && newUserPassTag
+                  ? ""
+                  : "cursor-not-allowed opacity-50"
+              }`}
+              disabled={newUserPassTag && newUserSavePass}
             >
-              Submit
+              Save Password
             </button>
-          </div> */}
+          </div>
         </div>
 
         {/* Right Section - List Passwords */}
