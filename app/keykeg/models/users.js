@@ -4,6 +4,7 @@ const userSchema = new Schema({
   uniqueId: { type: String, unique: true, required: true },
   username: { type: String, unique: true, required: true },
   email: { type: String, unique: true, required: true },
+  name: { type: String, required: false, default: "" },
   password_count: { type: Number, required: true, default: 0 },
 });
 
