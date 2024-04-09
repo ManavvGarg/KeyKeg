@@ -52,7 +52,7 @@ const NavBar = (props) => {
     );
   } else if (props.navType == 1) {
     return (
-      <nav className="bg-white py-5 h-[6rem] font-bold shadow-lg shadow-blue-500/50">
+      <nav className="bg-white py-5 h-[6rem] font-bold shadow-lg shadow-blue-100">
         <div className="container mx-auto flex justify-between items-center">
           <div>
             <ul className="flex space-x-10 space-y-2">
@@ -83,7 +83,7 @@ const NavBar = (props) => {
           </div>
           <div>
             <ul className="flex space-x-4 space-y-4">
-              <li className="text-black py-4">Welcome {props.username}</li>
+              <li className="text-black py-4">Welcome {props.username} </li>
               <li>
                 <Link
                   href="/panel"
@@ -107,7 +107,7 @@ const NavBar = (props) => {
     );
   } else if (props.navType == 2) {
     return (
-      <nav className="flex bg-white py-5 h-[6rem] font-bold shadow-lg shadow-blue-500/50">
+      <nav className="flex bg-white py-5 h-[6rem] font-bold shadow-lg shadow-blue-100">
         <div className="container mx-auto flex justify-between items-center">
           <div>
             <ul className="flex space-x-10 space-y-2">

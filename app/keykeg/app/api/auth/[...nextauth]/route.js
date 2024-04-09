@@ -18,12 +18,11 @@ const handler = NextAuth({
           .collection("users")
           .findOne({ email: user.user.email })
           .then(async (data, error) => {
-            console.log(data);
             if (data) {
               console.log("data found");
               return true;
             } else {
-              console.log("data not making found");
+              console.log("data not found. making");
               await db.clientConnection
                 .db(process.env.MONGO_DB)
                 .collection("users")
@@ -32,6 +31,18 @@ const handler = NextAuth({
                   name: user.user.name,
                   username: user.user.email.split("@")[0],
                   uniqueId: user.user.id,
+                  password_count: 0,
+                });
+
+              await db.clientConnection
+                .db(process.env.MONGO_DB)
+                .collection("hashedPasswords")
+                .insertOne({
+                  email: user.user.email,
+                  name: user.user.name,
+                  username: user.user.email.split("@")[0],
+                  uniqueId: user.user.id,
+                  passwords: [],
                 });
             }
           });
