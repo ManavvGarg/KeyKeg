@@ -36,8 +36,10 @@ The ultimate password management solution that securely stores your passwords, g
    - Execute `python server.py` to start the server.
 
 ## Additional Information
+Within a remarkable span of 2.5 days, I conceptualized, developed, and brought this password management application to life.
+
 **Machine Learning Model Used for Password Prediction:** *Random Forest Ensemble Technique*
-The Random Forest method operates by constructing numerous decision trees on random subsets of the training data and features. Each tree independently analyzes the data and makes predictions. However, the true power lies in aggregating these predictions through techniques like majority voting or averaging, resulting in a model that is more accurate and less prone to overfitting than its constituent decision trees.
+> The Random Forest method operates by constructing numerous decision trees on random subsets of the training data and features. Each tree independently analyzes the data and makes predictions. However, the true power lies in aggregating these predictions through techniques like majority voting or averaging, resulting in a model that is more accurate and less prone to overfitting than its constituent decision trees.
 
 This approach excels in handling high-dimensional and complex data, capturing intricate non-linear patterns that individual models may struggle with. Furthermore, Random Forests inherently offer parallelization capabilities, enabling efficient processing of large datasets, making them well-suited for big data applications.
 
