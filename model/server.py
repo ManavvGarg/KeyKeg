@@ -1,15 +1,13 @@
 from flask import Flask, request, jsonify
 import pickle
 import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
 from warnings import filterwarnings
 #vectorizer = TfidfVectorizer(analyzer="char")
 
 app = Flask(__name__)
-filterwarnings()
 # Load the trained model
 model = pickle.load(open('./keykeg_rf.pkl', 'rb'))
-vectorizer = pickle.load(open('./vectorizer.pkl', 'rb'))
+vectorizer = pickle.load(open('./keykeg_rf_vectorizer.pkl', 'rb'))
 
 @app.route('/predict', methods=['GET'])
 def predict():
