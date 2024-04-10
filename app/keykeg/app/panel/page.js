@@ -4,6 +4,7 @@ import React, { useState, useEffect, useLayoutEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
 import NavBar from "@/components/NavBar";
 import HomePage from "../page";
+import Footer from "@/components/footer";
 
 const PasswordCell = ({ password, index, handleRefresh, refeshState }) => {
   const { data, status } = useSession();
@@ -171,22 +172,28 @@ const PanelPage = () => {
 
   //Prediction Pass
   const [newUserPredPass, setNewUserPredPass] = useState("");
+  const [newUserPredPassAnalysis, setNewUserPredPassAnalysis] = useState("");
 
   const handlePredPass = async () => {
-    const passwordData = {
-      password: newUserPredPass,
-    };
-    await fetch("/api/predPass", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(passwordData),
-    })
+    await fetch(
+      `https://11mnv-keykeg.hf.space/predict?password=${newUserPredPass}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+        return response.json();
+      })
+      .then((data) => {
+        setNewUserPredPassAnalysis(
+          `Password: ${newUserPredPass}|Analysis: ${data.prediction}`
+        );
       })
       .catch((error) => {
         console.error("There was a problem with the request:", error);
@@ -224,7 +231,7 @@ const PanelPage = () => {
   }
 
   return (
-    <main className="items-center justify-center bg-white pb-5">
+    <main className="items-center justify-center bg-white">
       <NavBar navType={2} signOut={signOut} />
       <div className="flex min-h-[100%] h-[100vh] overflow-hidden w-full">
         {/* Left Section - Predict, Generate, Save */}
@@ -254,6 +261,18 @@ const PanelPage = () => {
             >
               Submit
             </button>
+
+            {newUserPredPassAnalysis ? (
+              <div className="mb-4">
+                <label className="block font-medium text-gray-700 text-l pt-4">
+                  {newUserPredPassAnalysis.split("|")[0]}
+                  <br />
+                  {newUserPredPassAnalysis.split("|")[1]}
+                </label>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           <hr
             className="my-16"
@@ -429,6 +448,7 @@ const PanelPage = () => {
           </table>
         </div>
       </div>
+      <Footer />
     </main>
   );
 };
