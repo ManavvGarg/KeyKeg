@@ -175,15 +175,12 @@ const PanelPage = () => {
   const [newUserPredPassAnalysis, setNewUserPredPassAnalysis] = useState("");
 
   const handlePredPass = async () => {
-    await fetch(
-      `https://11mnv-keykeg.hf.space/predict?password=${newUserPredPass}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    await fetch(`${process.env.PRED_API}${newUserPredPass}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
