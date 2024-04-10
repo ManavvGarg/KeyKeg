@@ -43,7 +43,7 @@ const AboutPage = () => {
                   information is protected from potential threats.
                 </p>
                 <p className="mt-4 text-lg text-gray-500">
-                  Whether you're an individual looking to safeguard your
+                  Whether you are an individual looking to safeguard your
                   personal accounts or a business seeking to secure your
                   corporate data, KeyKeg - Password Wizard has got you covered.
                   Experience the ultimate peace of mind and take control of your
@@ -95,7 +95,7 @@ const AboutPage = () => {
                   information is protected from potential threats.
                 </p>
                 <p className="mt-4 text-lg text-gray-500">
-                  Whether you're an individual looking to safeguard your
+                  Whether you are an individual looking to safeguard your
                   personal accounts or a business seeking to secure your
                   corporate data, KeyKeg - Password Wizard has got you covered.
                   Experience the ultimate peace of mind and take control of your
