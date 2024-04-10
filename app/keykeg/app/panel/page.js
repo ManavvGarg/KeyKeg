@@ -426,6 +426,7 @@ const PanelPage = () => {
               {savedPasswords && savedPasswords.length > 0 ? (
                 savedPasswords.map((password, index) => (
                   <PasswordCell
+                    key={index}
                     index={index}
                     password={password}
                     handleRefresh={handleRefresh}
@@ -438,8 +439,8 @@ const PanelPage = () => {
                     <h2 className="py-2 px-4 font-bold text-black">
                       Click on the refresh button to refresh this table and to
                       grab all your passwords. <br />
-                      If you still don't see any saved passwords. Save a
-                      password to list them here.
+                      If you still dont see any saved passwords. Save a password
+                      to list them here.
                     </h2>
                   </td>
                 </tr>
