@@ -1,4 +1,4 @@
-
+![Screenshot 2024-04-10 141313](https://github.com/ManavvGarg/KeyKeg/assets/58691392/2fe7cc1f-ed8a-45d5-bb85-2cc29c44de99)
 ## Description
 **KeyKeg - Password Wizard | Secure, Strong, and Smart**
 The ultimate password management solution that securely stores your passwords, generates strong and unique passwords, and utilizes artificial intelligence to analyze and classify password strength.
